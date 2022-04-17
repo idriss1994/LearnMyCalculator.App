@@ -53,9 +53,9 @@ namespace LearnMyCalculatorApp.Tests
         {
             var calculator = new Calculator();
 
-            int actual = calculator.Divide(4, 2);
+            int actual = calculator.Divide(2, 2);
 
-            Assert.AreEqual(2, actual);
+            Assert.AreEqual(1, actual);
         }
 
         [TestMethod]
