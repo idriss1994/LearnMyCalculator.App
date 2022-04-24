@@ -47,7 +47,7 @@ namespace LearnMyCalculatorApp.Tests
 
             Assert.AreEqual(25, actual);
         }
-
+        //Test methode from Master branch
         [TestMethod]
         public void DivideTest()
         {
