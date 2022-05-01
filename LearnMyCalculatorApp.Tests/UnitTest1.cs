@@ -1,12 +1,31 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LearnMyCalculatorApp;
 using System;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace LearnMyCalculatorApp.Tests
 {
     [TestClass]
     public class CalculatorTests
     {
+        private readonly IConfiguration _configuration;
+        public CalculatorTests()
+        {
+            //for this install package: Microsoft.Extensions.Configuration.Json
+            _configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("config.json", false, false)
+                .Build();
+        }
+
+        [TestMethod]
+        public void CheckMyAgeFromAppSettingsFile()
+        {
+            string actual = _configuration["myName"];
+            
+            Assert.AreEqual("idriss", actual);
+        }
         [TestMethod]
         public void CalculatorNullTest()
         {
