@@ -11,12 +11,16 @@ namespace LearnMyCalculator.App
     {
         //OnChange property contains all the
         //list of subscribers callback method
-        public event Action OnChange = delegate { };
+        //This is generic EventHandler delegate where 
+        //we define the type of argument want to send 
+        //while raising our event, MyEventArgs in our c
+        public event EventHandler<MyEventArgs> OnChange = delegate { };
 
         public void Raise()
         {
             //Invoke OnChange action
-            OnChange();
+            //Lets pass MyEventArgs object with some random value
+            OnChange(this, new MyEventArgs(33));
         }
     }
 }
