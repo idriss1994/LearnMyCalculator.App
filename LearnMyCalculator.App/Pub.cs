@@ -11,16 +11,12 @@ namespace LearnMyCalculator.App
     {
         //OnChange property contains all the
         //list of subscribers callback method
-        public Action OnChange { get; set; }
+        public event Action OnChange = delegate { };
 
         public void Raise()
         {
-            //Check if OnChange Action set before invoking it 
-            if (OnChange != null)
-            {
-                //Invoke OnChange action
-                OnChange();
-            }
+            //Invoke OnChange action
+            OnChange();
         }
     }
 }

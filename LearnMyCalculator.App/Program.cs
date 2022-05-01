@@ -9,7 +9,7 @@ namespace LearnMyCalculatorApp
         {
             //Initialize pub class  object
             Pub p = new Pub();
-
+            p.Raise();
             //Register for OnChange event  subscriber 1
             p.OnChange += () => Console.WriteLine("Subscriber 1!");
 
