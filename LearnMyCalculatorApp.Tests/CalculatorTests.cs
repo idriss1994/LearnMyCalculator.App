@@ -3,6 +3,7 @@ using LearnMyCalculatorApp;
 using System;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using FluentAssertions;
 
 namespace LearnMyCalculatorApp.Tests
 {
@@ -43,8 +44,11 @@ namespace LearnMyCalculatorApp.Tests
             // Act
             var actual = calculator.Add(1, 1);
 
-            // Assert
-            Assert.AreEqual(2, actual);
+            // Non fluent assert
+            //Assert.AreEqual(2, actual);
+
+            //Fluent assert
+            actual.Should().Be(2).And.NotBe(1);
         }
 
         [TestMethod]
@@ -72,7 +76,7 @@ namespace LearnMyCalculatorApp.Tests
         {
             var calculator = new Calculator();
 
-            int actual = calculator.Divide(2, 2);
+            int? actual = calculator.Divide(2, 2);
 
             Assert.AreEqual(1, actual);
         }
@@ -82,7 +86,7 @@ namespace LearnMyCalculatorApp.Tests
         {
             var calculator = new Calculator();
 
-            int actual = calculator.Divide(4, 0);
+            int? actual = calculator.Divide(4, 0);
 
             Assert.IsNull(actual);
         }
