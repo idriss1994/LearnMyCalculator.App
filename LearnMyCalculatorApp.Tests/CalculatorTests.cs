@@ -1,12 +1,32 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LearnMyCalculatorApp;
 using System;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using FluentAssertions;
 
 namespace LearnMyCalculatorApp.Tests
 {
     [TestClass]
     public class CalculatorTests
     {
+        private readonly IConfiguration _configuration;
+        public CalculatorTests()
+        {
+            //for this install package: Microsoft.Extensions.Configuration.Json
+            _configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("config.json", false, false)
+                .Build();
+        }
+
+        [TestMethod]
+        public void CheckMyAgeFromAppSettingsFile()
+        {
+            string actual = _configuration["myName"];
+            
+            Assert.AreEqual("idriss", actual);
+        }
         [TestMethod]
         public void CalculatorNullTest()
         {
@@ -16,16 +36,23 @@ namespace LearnMyCalculatorApp.Tests
         }
 
         [TestMethod]
-        public void AddTest()
+        [DataRow(1,1,2)]
+        [DataRow(2,5,7)]
+        [DataRow(3,3,9)]//should failed
+        [DataRow(2,0,0)]//should failed
+        public void AddTest(int x, int y, int expected)
         {
             // Arrange
             var calculator = new Calculator();
 
             // Act
-            var actual = calculator.Add(1, 1);
+            var actual = calculator.Add(x, y);
 
-            // Assert
-            Assert.AreEqual(2, actual);
+            // Non fluent assert
+            //Assert.AreEqual(2, actual);
+
+            //Fluent assert
+            actual.Should().Be(expected).And.NotBe(1);
         }
 
         [TestMethod]
@@ -53,7 +80,7 @@ namespace LearnMyCalculatorApp.Tests
         {
             var calculator = new Calculator();
 
-            int actual = calculator.Divide(2, 2);
+            int? actual = calculator.Divide(2, 2);
 
             Assert.AreEqual(1, actual);
         }
@@ -63,9 +90,10 @@ namespace LearnMyCalculatorApp.Tests
         {
             var calculator = new Calculator();
 
-            int actual = calculator.Divide(4, 0);
+            int? actual = calculator.Divide(4, 0);
 
-            Assert.IsNull(actual);
+            //Assert.IsNull(actual);
+            actual.Should().BeNull();
         }
     }
 }
