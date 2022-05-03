@@ -36,19 +36,23 @@ namespace LearnMyCalculatorApp.Tests
         }
 
         [TestMethod]
-        public void AddTest()
+        [DataRow(1,1,2)]
+        [DataRow(2,5,7)]
+        [DataRow(3,3,9)]//should failed
+        [DataRow(2,0,0)]//should failed
+        public void AddTest(int x, int y, int expected)
         {
             // Arrange
             var calculator = new Calculator();
 
             // Act
-            var actual = calculator.Add(1, 1);
+            var actual = calculator.Add(x, y);
 
             // Non fluent assert
             //Assert.AreEqual(2, actual);
 
             //Fluent assert
-            actual.Should().Be(2).And.NotBe(1);
+            actual.Should().Be(expected).And.NotBe(1);
         }
 
         [TestMethod]
@@ -88,7 +92,8 @@ namespace LearnMyCalculatorApp.Tests
 
             int? actual = calculator.Divide(4, 0);
 
-            Assert.IsNull(actual);
+            //Assert.IsNull(actual);
+            actual.Should().BeNull();
         }
     }
 }
